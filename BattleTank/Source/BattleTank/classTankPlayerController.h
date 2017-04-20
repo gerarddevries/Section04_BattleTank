@@ -20,5 +20,6 @@ public:
 	///   already virtual
 	virtual void BeginPlay() override;
 
+private:
 	AclassTankPawn* GetControlledTank() const;   /// get the controlled tank
 };

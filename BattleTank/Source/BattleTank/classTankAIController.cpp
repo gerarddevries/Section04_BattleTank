@@ -10,6 +10,8 @@ void AclassTankAIController::BeginPlay()
 {
 	Super::BeginPlay();   /// call the method from the ancestor
 
+	UE_LOG(LogTemp, Warning, TEXT("AIController Begin Play"));
+
 	AclassTankPawn* L_pTankPawn = GetControlledTank();
 	if (L_pTankPawn) {
 		UE_LOG(LogTemp, Warning, TEXT("AIController possessing %s!"), *L_pTankPawn->GetName());
@@ -18,12 +20,28 @@ void AclassTankAIController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("AIController not possessing a tank!"));
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("AIController Begin Play"));
+	AclassTankPawn* L_pPlayerControllerTankPawn = GetPlayerTank();
+	if (L_pPlayerControllerTankPawn) {
+		UE_LOG(LogTemp, Warning, TEXT("Found PlayerTank %s!"), *L_pPlayerControllerTankPawn->GetName());
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("No PlayerTank found!"));
+	}
+
 }
 
 /// ================================================================================
 //  Get the controlled tank
 AclassTankPawn* AclassTankAIController::GetControlledTank() const
 {
-	return Cast<AclassTankPawn>(GetPawn());   /// get the pawn the PlayerController is currently possessing and cast it to a ATank
+	/// get the pawn the AIController is currently possessing and cast it to an AclassTankPawn
+	return Cast<AclassTankPawn>(GetPawn());
+}
+
+/// ================================================================================
+//  Get the PlayerController tank
+AclassTankPawn* AclassTankAIController::GetPlayerTank() const
+{
+	/// get the pawn the PlayerController is currently possessing and cast it to an AclassTankPawn
+	return Cast<AclassTankPawn>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
