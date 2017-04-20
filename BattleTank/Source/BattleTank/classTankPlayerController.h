@@ -19,7 +19,14 @@ public:
 	/// - prefix "virtual" to make sure possible children can override this method (doesn't do anything in this case since the original method was 
 	///   already virtual
 	virtual void BeginPlay() override;
+	/// - override the Tick() from the last ancestor that has the method: AActor, and add functionality to it
+	/// - prefix "virtual" to make sure possible children can override this method (doesn't do anything in this case since the original method was 
+	///   already virtual
+	virtual void Tick(float P_floatDeltaTime) override;
 
 private:
-	AclassTankPawn* GetControlledTank() const;   /// get the controlled tank
+	/// get the controlled tank
+	AclassTankPawn* GetControlledTank() const;
+	/// start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
+	void AimTowardsCrosshair();
 };

@@ -22,8 +22,28 @@ void AclassTankPlayerController::BeginPlay()
 }
 
 /// ================================================================================
-//  Get the controlled tank
+///  Tick() overrides the original method from the ancestor: AActor
+void AclassTankPlayerController::Tick(float P_floatDeltaTime)
+{
+	Super::Tick(P_floatDeltaTime);   /// call the method from the ancestor
+
+	AimTowardsCrosshair();
+}
+
+/// ================================================================================
+//  get the controlled tank
 AclassTankPawn* AclassTankPlayerController::GetControlledTank() const
 {
 	return Cast<AclassTankPawn>(GetPawn());   /// get the pawn the PlayerController is currently possessing and cast it to a ATank
+}
+
+/// ================================================================================
+//  start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
+void AclassTankPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+	// get world location of linetrace through crosshair
+	// if linetrace hits the landscape
+		// tell controlled tank to aim at this point
 }
