@@ -29,4 +29,6 @@ private:
 	AclassTankPawn* GetControlledTank() const;
 	/// start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
+	/// get world location of linetrace through crosshair, return true if landscape hit
+	bool GetSightRayHitLocation(FVector& P_vecOutHitLocation) const;
 };
