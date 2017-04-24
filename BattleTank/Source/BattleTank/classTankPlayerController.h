@@ -46,4 +46,6 @@ private:
 	void AimTowardsCrosshair();
 	/// get world location of linetrace through crosshair, return true if landscape hit
 	bool GetSightRayHitLocation(FVector& P_vecOutHitLocation) const;
+	/// "de-project" the screen position of the crosshair to a world direction (i.e. look direction)
+	bool GetLookDirection(FVector2D P_vec2dScreenLocation, FVector& LookDirection) const;
 };

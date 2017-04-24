@@ -63,11 +63,23 @@ bool AclassTankPlayerController::GetSightRayHitLocation(FVector& P_vecOutHitLoca
 	int32 L_intViewportHeight;
 	GetViewportSize(L_intViewportWidth, L_intViewportHeight);
 	FVector2D L_vec2dScreenLocation = FVector2D(L_intViewportWidth * CrossHairLocationX, L_intViewportHeight * CrossHairLocationY);
-	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation: %s"), *L_vec2dScreenLocation.ToString());
-
+	
 	/// "de-project" the screen position of the crosshair to a world direction (i.e. look direction)
+	FVector L_vecLookDirection;
+	if (GetLookDirection(L_vec2dScreenLocation, L_vecLookDirection)) {
+		UE_LOG(LogTemp, Warning, TEXT("WorldDirection: %s"), *L_vecLookDirection.ToString());
+	}
+
 	/// line-trace along that look direction and see what we hit (up to max range)
 
 	P_vecOutHitLocation = FVector(1.0);
 	return true;
+}
+
+/// ================================================================================
+//  "de-project" the screen position of the crosshair to a world direction (i.e. look direction)
+bool AclassTankPlayerController::GetLookDirection(FVector2D P_vec2dScreenLocation, FVector& P_vecLookDirection) const
+{
+	FVector L_vecWorldLocation;   /// dummy variable; we don't need the value it gets back from DeprojectScreenPositionToWorld
+	return DeprojectScreenPositionToWorld(P_vec2dScreenLocation.X, P_vec2dScreenLocation.Y, L_vecWorldLocation, P_vecLookDirection);
 }
