@@ -45,12 +45,12 @@ void AclassTankPlayerController::AimTowardsCrosshair()
 
 	FVector L_vecHitLocation;   // Out parameter, so initialising it is not necessary
 	if (GetSightRayHitLocation(L_vecHitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *L_vecHitLocation.ToString());
+//		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *L_vecHitLocation.ToString());
 
 		// TODO tell controlled tank to aim at this point
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: no target"));
+//		UE_LOG(LogTemp, Warning, TEXT("HitLocation: no target"));
 	}
 }
 
@@ -58,6 +58,16 @@ void AclassTankPlayerController::AimTowardsCrosshair()
 //  get world location of linetrace through crosshair, return true if landscape hit
 bool AclassTankPlayerController::GetSightRayHitLocation(FVector& P_vecOutHitLocation) const
 {
+	/// find the crosshair position (on screen)
+	int32 L_intViewportWidth;
+	int32 L_intViewportHeight;
+	GetViewportSize(L_intViewportWidth, L_intViewportHeight);
+	FVector2D L_vec2dScreenLocation = FVector2D(L_intViewportWidth * CrossHairLocationX, L_intViewportHeight * CrossHairLocationY);
+	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation: %s"), *L_vec2dScreenLocation.ToString());
+
+	/// "de-project" the screen position of the crosshair to a world direction (i.e. look direction)
+	/// line-trace along that look direction and see what we hit (up to max range)
+
 	P_vecOutHitLocation = FVector(1.0);
 	return true;
 }
