@@ -39,6 +39,11 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CrossHairLocationY = 0.33333;
 	float& F_floatCrossHairLocationY = CrossHairLocationY;
+	/// because of the UPROPERTY-macro LineTraceRange is added as a property inside Unreal engine as well
+	/// define F_floatLineTraceRange as alias for LineTraceRange to conform Gerard's naming conventions
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000;   // distances are counted in cm., so 10km = 1000000
+	float& F_floatLineTraceRange = LineTraceRange;
 
 	/// get the controlled tank
 	AclassTankPawn* GetControlledTank() const;
@@ -48,4 +53,6 @@ private:
 	bool GetSightRayHitLocation(FVector& P_vecOutHitLocation) const;
 	/// "de-project" the screen position of the crosshair to a world direction (i.e. look direction)
 	bool GetLookDirection(FVector2D P_vec2dScreenLocation, FVector& LookDirection) const;
+	///
+	bool GetLookVectorHitLocation(FVector P_vecLookDirection, FVector& P_vecHitLocation) const;
 };

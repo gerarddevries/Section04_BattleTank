@@ -45,12 +45,12 @@ void AclassTankPlayerController::AimTowardsCrosshair()
 
 	FVector L_vecHitLocation;   // Out parameter, so initialising it is not necessary
 	if (GetSightRayHitLocation(L_vecHitLocation)) {
-//		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *L_vecHitLocation.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *L_vecHitLocation.ToString());
 
 		// TODO tell controlled tank to aim at this point
 	}
 	else {
-//		UE_LOG(LogTemp, Warning, TEXT("HitLocation: no target"));
+		UE_LOG(LogTemp, Warning, TEXT("HitLocation: no target"));
 	}
 }
 
@@ -67,13 +67,11 @@ bool AclassTankPlayerController::GetSightRayHitLocation(FVector& P_vecOutHitLoca
 	/// "de-project" the screen position of the crosshair to a world direction (i.e. look direction)
 	FVector L_vecLookDirection;
 	if (GetLookDirection(L_vec2dScreenLocation, L_vecLookDirection)) {
-		UE_LOG(LogTemp, Warning, TEXT("WorldDirection: %s"), *L_vecLookDirection.ToString());
+		/// line-trace along that look direction and see what we hit (up to max range)
+		if (GetLookVectorHitLocation(L_vecLookDirection, P_vecOutHitLocation)) { return true; }
 	}
 
-	/// line-trace along that look direction and see what we hit (up to max range)
-
-	P_vecOutHitLocation = FVector(1.0);
-	return true;
+	return false;
 }
 
 /// ================================================================================
@@ -82,4 +80,34 @@ bool AclassTankPlayerController::GetLookDirection(FVector2D P_vec2dScreenLocatio
 {
 	FVector L_vecWorldLocation;   /// dummy variable; we don't need the value it gets back from DeprojectScreenPositionToWorld
 	return DeprojectScreenPositionToWorld(P_vec2dScreenLocation.X, P_vec2dScreenLocation.Y, L_vecWorldLocation, P_vecLookDirection);
+}
+
+/// ================================================================================
+//  get the position, i.e. vector, of the location where there is a hit (if any)
+bool AclassTankPlayerController::GetLookVectorHitLocation(FVector P_vecLookDirection, FVector& P_vecHitLocation) const
+{
+	/// setup collision query parameters
+	FCollisionQueryParams L_pTraceParameters(
+		FName(TEXT("")),
+		false,       /// bInTraceComplex; = false: use simple structures of objects for collision; = true: use complex structures of objects for collision
+		GetOwner()   /// ignore ourselves
+	);
+
+	FHitResult L_pHitResult;
+	// get th vector of the position of camera (not the position of the player!), i.e. the start of the line trace
+	FVector L_vecLineTraceStart = PlayerCameraManager->GetCameraLocation();
+	//  get the vector for the end of the line trace
+	FVector L_vecLineTraceEnd = L_vecLineTraceStart + P_vecLookDirection * F_floatLineTraceRange;
+
+	if (GetWorld()->LineTraceSingleByChannel(
+			L_pHitResult,
+			L_vecLineTraceStart,
+			L_vecLineTraceEnd,
+			ECollisionChannel::ECC_Visibility   /// if you can see it, you can hit it
+			)) {
+		P_vecHitLocation = L_pHitResult.ImpactPoint;
+		return true;
+	}
+	
+	return false;   // line trace didn't succeed
 }
