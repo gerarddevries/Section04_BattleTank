@@ -11,6 +11,9 @@ class BATTLETANK_API AclassTankPawn : public APawn
 	GENERATED_BODY()
 
 public:
+	void AimAt(FVector P_vecHitLocation);
+
+private:
 	// Sets default values for this pawn's properties
 	AclassTankPawn();
 
@@ -18,11 +21,8 @@ public:
 	virtual void BeginPlay() override;
 	
 	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick( float P_floatDeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
-
-	
-	
+	virtual void SetupPlayerInputComponent(class UInputComponent* P_pInputComponent) override;	
 };

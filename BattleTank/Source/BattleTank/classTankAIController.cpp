@@ -10,24 +10,25 @@ void AclassTankAIController::BeginPlay()
 {
 	Super::BeginPlay();   /// call the method from the ancestor
 
-	UE_LOG(LogTemp, Warning, TEXT("AIController Begin Play"));
-
 	AclassTankPawn* L_pTankPawn = GetControlledTank();
-	if (L_pTankPawn) {
-		UE_LOG(LogTemp, Warning, TEXT("AIController possessing %s!"), *L_pTankPawn->GetName());
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("AIController not possessing a tank!"));
-	}
 
 	AclassTankPawn* L_pPlayerControllerTankPawn = GetPlayerTank();
-	if (L_pPlayerControllerTankPawn) {
-		UE_LOG(LogTemp, Warning, TEXT("Found PlayerTank %s!"), *L_pPlayerControllerTankPawn->GetName());
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("No PlayerTank found!"));
-	}
+}
 
+/// ================================================================================
+///  Tick() overrides the original method from the ancestor: AActor
+void AclassTankAIController::Tick(float P_floatDeltaTime)
+{
+	Super::Tick(P_floatDeltaTime);   /// call the method from the ancestor
+
+	if (!GetControlledTank()) { return; }
+
+	// TODO move towards player
+
+	// aim towards player
+	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+	// TODO fire at player when ready
 }
 
 /// ================================================================================

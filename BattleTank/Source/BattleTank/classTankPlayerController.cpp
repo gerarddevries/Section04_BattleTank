@@ -11,14 +11,6 @@ void AclassTankPlayerController::BeginPlay()
 	Super::BeginPlay();   /// call the method from the ancestor
 
 	AclassTankPawn* L_pTankPawn = GetControlledTank();
-	if (L_pTankPawn) {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing %s!"), *L_pTankPawn->GetName());
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing a tank!"));
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play"));
 }
 
 /// ================================================================================
@@ -45,12 +37,8 @@ void AclassTankPlayerController::AimTowardsCrosshair()
 
 	FVector L_vecHitLocation;   // Out parameter, so initialising it is not necessary
 	if (GetSightRayHitLocation(L_vecHitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *L_vecHitLocation.ToString());
-
-		// TODO tell controlled tank to aim at this point
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: no target"));
+		// tell controlled tank to aim at this point
+		GetControlledTank()->AimAt(L_vecHitLocation);
 	}
 }
 

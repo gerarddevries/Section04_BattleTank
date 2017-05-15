@@ -14,13 +14,17 @@ class BATTLETANK_API AclassTankAIController : public AAIController
 {
 	GENERATED_BODY()
 
-public:
+private:
 	/// - override the BeginPlay() from the last ancestor that has the method: AActor, and add functionality to it
 	/// - prefix "virtual" to make sure possible children can override this method (doesn't do anything in this case since the original method was 
 	///   already virtual
 	virtual void BeginPlay() override;
-
-private:
-	AclassTankPawn* GetControlledTank() const;   /// get the controlled tank
-	AclassTankPawn* GetPlayerTank() const;       /// get the tank from the player, i.e. the PlayerController
+	/// - override the Tick() from the last ancestor that has the method: AActor, and add functionality to it
+	/// - prefix "virtual" to make sure possible children can override this method (doesn't do anything in this case since the original method was 
+	///   already virtual
+	virtual void Tick(float P_floatDeltaTime) override;
+	// get the controlled tank
+	AclassTankPawn* GetControlledTank() const;         
+	// get the tank from the player, i.e. the PlayerController
+	AclassTankPawn* GetPlayerTank() const;             
 };
