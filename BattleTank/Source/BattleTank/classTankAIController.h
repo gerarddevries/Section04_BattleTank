@@ -4,7 +4,7 @@
 
 #include "classTankPawn.h"
 #include "AIController.h"
-#include "classTankAIController.generated.h"
+#include "classTankAIController.generated.h"   /// must be the last include
 
 /**
  * 

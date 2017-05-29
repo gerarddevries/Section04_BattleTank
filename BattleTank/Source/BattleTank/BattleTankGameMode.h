@@ -3,7 +3,7 @@
 #pragma once
 
 #include "GameFramework/GameMode.h"
-#include "BattleTankGameMode.generated.h"
+#include "BattleTankGameMode.generated.h"   /// must be the last include
 
 /**
  * 

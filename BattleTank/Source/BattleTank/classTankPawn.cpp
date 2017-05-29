@@ -9,6 +9,9 @@ AclassTankPawn::AclassTankPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	// manually create a component or subobject in code; this component will therefor be visible in blueprintTankPawn
+	F_pTankAimingComponent = CreateDefaultSubobject<UclassTankAimingComponent>(FName("TankAimingComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -32,6 +35,5 @@ void AclassTankPawn::SetupPlayerInputComponent(class UInputComponent* P_pInputCo
 //
 void AclassTankPawn::AimAt(FVector P_vecHitLocation)
 {
-	FString L_strCurrentTankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s!"), *L_strCurrentTankName, *P_vecHitLocation.ToString());
+	F_pTankAimingComponent->AimAt(P_vecHitLocation);
 }
