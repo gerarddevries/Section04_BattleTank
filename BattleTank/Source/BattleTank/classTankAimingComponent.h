@@ -23,5 +23,11 @@ public:
 
 	//
 	void AimAt(FVector P_vecHitLocation);
-	
+
+	//
+	void SetBarrel(UStaticMeshComponent* P_pBarrel);
+
+private:
+	//
+	UStaticMeshComponent* F_pBarrel = nullptr;
 };

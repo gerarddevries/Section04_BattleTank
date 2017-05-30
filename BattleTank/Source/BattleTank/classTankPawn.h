@@ -13,6 +13,12 @@ class BATTLETANK_API AclassTankPawn : public APawn
 
 public:
 	void AimAt(FVector P_vecHitLocation);
+
+	/// because of the UFUNCTION-macro SetBarrel is added as a function inside Unreal engine as well, in this case you can call it from Blueprint;
+	/// the name of the parameter differs from the one used in the implementation (in the cpp-file); the name of the parameter below is used
+	/// in Blueprint as name of the pin of the node, while the name of the parameter used in the implementation
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrel(UStaticMeshComponent* Barrel);
 	
 protected:
 	UclassTankAimingComponent* F_pTankAimingComponent = nullptr;

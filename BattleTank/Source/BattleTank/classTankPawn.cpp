@@ -37,3 +37,8 @@ void AclassTankPawn::AimAt(FVector P_vecHitLocation)
 {
 	F_pTankAimingComponent->AimAt(P_vecHitLocation);
 }
+
+void AclassTankPawn::SetBarrel(UStaticMeshComponent* P_pBarrel)
+{
+	F_pTankAimingComponent->SetBarrel(P_pBarrel);
+}
