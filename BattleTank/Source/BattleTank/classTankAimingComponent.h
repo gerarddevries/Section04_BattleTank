@@ -22,7 +22,7 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	//
-	void AimAt(FVector P_vecHitLocation);
+	void AimAt(FVector P_vecHitLocation, float P_floatLaunchSpeed);
 
 	//
 	void SetBarrel(UStaticMeshComponent* P_pBarrel);

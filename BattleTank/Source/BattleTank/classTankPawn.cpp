@@ -35,7 +35,7 @@ void AclassTankPawn::SetupPlayerInputComponent(class UInputComponent* P_pInputCo
 //
 void AclassTankPawn::AimAt(FVector P_vecHitLocation)
 {
-	F_pTankAimingComponent->AimAt(P_vecHitLocation);
+	F_pTankAimingComponent->AimAt(P_vecHitLocation, F_floatLaunchSpeed);
 }
 
 void AclassTankPawn::SetBarrel(UStaticMeshComponent* P_pBarrel)

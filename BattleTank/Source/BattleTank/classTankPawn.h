@@ -35,4 +35,10 @@ private:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* P_pInputComponent) override;	
+
+	/// because of the UPROPERTY-macro LaunchSpeed is added as a property inside Unreal engine as well
+	/// define F_floatLaunchSpeed as alias for LaunchSpeed to conform Gerard's naming conventions
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 100000;   // TODO find sensible default
+	float& F_floatLaunchSpeed = LaunchSpeed;
 };
